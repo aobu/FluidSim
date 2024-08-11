@@ -26,6 +26,7 @@ This implementation follows the method described by Jos Stam in his paper "Real-
 
 ### Core Concepts:
 
+- **Density Field**: The simulation uses a density field to represent the fluid's density in each cell.
 - **Velocity Field**: The simulation uses a velocity field to represent the fluid's flow. Each cell in the grid contains a velocity vector.
 - **Advection**: The advection step moves fluid quantities (like velocity and density) through the velocity field.
 - **Diffusion**: The diffusion step models the spreading of fluid quantities over time.
