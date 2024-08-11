@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{df41e1d8-0858-41d5-9068-376bd42b4f78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\FluidSimulation">
+      <UniqueIdentifier>{c0ea94b1-9096-4ccb-b18d-79a90e8774b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Renderer">
+      <UniqueIdentifier>{48c3d9b1-4390-41a8-b811-2f363503bb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\UI">
+      <UniqueIdentifier>{98f067e3-0478-4312-ab18-23da84de1eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{202246fb-e75d-4d21-b3b6-ee8a2936c082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{d8a495fa-9bcf-4044-8e7d-2ac0ce5bb9c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{77a133eb-33d1-4b03-8e1f-f4c80bc41249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{917b2147-41f1-4e2f-974e-246415f32891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\shaders">
+      <UniqueIdentifier>{7b80d94a-b74f-47ec-8468-ef8bedf90d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures">
+      <UniqueIdentifier>{63933f55-8548-453a-bffc-a35ebd6a4255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\GLFW">
+      <UniqueIdentifier>{89fc56d2-9bf7-4fa6-adf2-341335a388a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\glad\src\glad.c">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLRenderer.cpp">
+      <Filter>src\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="FluidSolver.cpp">
+      <Filter>src\FluidSimulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>src\FluidSimulation</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\GLFW\glfw-3.4.bin.WIN64\include\GLFW\glfw3.h">
+      <Filter>include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\GLFW\glfw-3.4.bin.WIN64\include\GLFW\glfw3native.h">
+      <Filter>include\GLFW</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLRenderer.h">
+      <Filter>src\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="FluidSolver.h">
+      <Filter>src\FluidSimulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>src\FluidSimulation</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\GLFW\glfw-3.4.bin.WIN64\lib-vc2022\glfw3.lib">
+      <Filter>lib</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment_shader.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="vertex_shader.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
