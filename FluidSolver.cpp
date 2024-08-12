@@ -15,7 +15,7 @@ FluidSolver::~FluidSolver() {
 void FluidSolver::AddInputToField(FieldType fieldType, int i, int j, float s)
 {
     // calculate the index in the array using the IX function from Grid
-    int index = grid.IX(i, j);
+    int index = IX(i, j);
 
     switch (fieldType) {
     case DENSITY:
@@ -59,16 +59,16 @@ void FluidSolver::SetBoundary(FieldType fieldType)
     case BoundaryCondition::DIRICHLET:
         // Dirichlet  (fixed boundary values)
         for (int i = 1; i <= N; i++) {
-            x[grid.IX(0, i)] = 0.0f;             // Left boundary
-            x[grid.IX(N + 1, i)] = 0.0f;         // Right boundary
-            x[grid.IX(i, 0)] = 0.0f;             // Bottom boundary
-            x[grid.IX(i, N + 1)] = 0.0f;         // Top boundary
+            x[IX(0, i)] = 0.0f;             // Left boundary
+            x[IX(N + 1, i)] = 0.0f;         // Right boundary
+            x[IX(i, 0)] = 0.0f;             // Bottom boundary
+            x[IX(i, N + 1)] = 0.0f;         // Top boundary
         }
         // Handle the corners
-        x[grid.IX(0, 0)] = 0.0f;                // Bottom-left corner
-        x[grid.IX(0, N + 1)] = 0.0f;            // Top-left corner
-        x[grid.IX(N + 1, 0)] = 0.0f;            // Bottom-right corner
-        x[grid.IX(N + 1, N + 1)] = 0.0f;        // Top-right corner
+        x[IX(0, 0)] = 0.0f;                // Bottom-left corner
+        x[IX(0, N + 1)] = 0.0f;            // Top-left corner
+        x[IX(N + 1, 0)] = 0.0f;            // Bottom-right corner
+        x[IX(N + 1, N + 1)] = 0.0f;        // Top-right corner
         break;
 
     case BoundaryCondition::NEUMANN:
@@ -116,8 +116,8 @@ void FluidSolver::Diffuse(FieldType fieldType, int NumIters)
     for (int k = 0; k < NumIters; k++) { // typically 20 iterations for convergence
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
-                x[grid.IX(i, j)] = (x0[grid.IX(i, j)] + a * (x[grid.IX(i - 1, j)] + x[grid.IX(i + 1, j)] +
-                    x[grid.IX(i, j - 1)] + x[grid.IX(i, j + 1)])) / (1 + 4 * a);
+                x[IX(i, j)] = (x0[IX(i, j)] + a * (x[IX(i - 1, j)] + x[IX(i + 1, j)] +
+                    x[IX(i, j - 1)] + x[IX(i, j + 1)])) / (1 + 4 * a);
             }
         }
         // apply boundary condition
@@ -157,8 +157,8 @@ void FluidSolver::Advect(FieldType fieldType)
 
     for (int i = 1; i <= N; i++) {
         for (int j = 1; j <= N; j++) {
-            x = i - dt0 * u[grid.IX(i, j)];
-            y = j - dt0 * v[grid.IX(i, j)];
+            x = i - dt0 * u[IX(i, j)];
+            y = j - dt0 * v[IX(i, j)];
 
             if (x < 0.5f) x = 0.5f;
             if (x > N + 0.5f) x = N + 0.5f;
@@ -175,8 +175,8 @@ void FluidSolver::Advect(FieldType fieldType)
             t1 = y - j0;
             t0 = 1.0f - t1;
 
-            d[grid.IX(i, j)] = s0 * (t0 * d0[grid.IX(i0, j0)] + t1 * d0[grid.IX(i0, j1)]) +
-                s1 * (t0 * d0[grid.IX(i1, j0)] + t1 * d0[grid.IX(i1, j1)]);
+            d[IX(i, j)] = s0 * (t0 * d0[IX(i0, j0)] + t1 * d0[IX(i0, j1)]) +
+                s1 * (t0 * d0[IX(i1, j0)] + t1 * d0[IX(i1, j1)]);
         }
     }
 
@@ -211,9 +211,9 @@ void FluidSolver::Project()
     // compute divergence of the velocity field
     for (i = 1; i <= N; i++) {
         for (j = 1; j <= N; j++) {
-            div[grid.IX(i, j)] = -0.5f * h * (u[grid.IX(i + 1, j)] - u[grid.IX(i - 1, j)] +
-                v[grid.IX(i, j + 1)] - v[grid.IX(i, j - 1)]);
-            p[grid.IX(i, j)] = 0;
+            div[IX(i, j)] = -0.5f * h * (u[IX(i + 1, j)] - u[IX(i - 1, j)] +
+                v[IX(i, j + 1)] - v[IX(i, j - 1)]);
+            p[IX(i, j)] = 0;
         }
     }
 
@@ -225,8 +225,8 @@ void FluidSolver::Project()
     for (k = 0; k < 20; k++) {
         for (i = 1; i <= N; i++) {
             for (j = 1; j <= N; j++) {
-                p[grid.IX(i, j)] = (div[grid.IX(i, j)] + p[grid.IX(i - 1, j)] + p[grid.IX(i + 1, j)] +
-                    p[grid.IX(i, j - 1)] + p[grid.IX(i, j + 1)]) / 4.0f;
+                p[IX(i, j)] = (div[IX(i, j)] + p[IX(i - 1, j)] + p[IX(i + 1, j)] +
+                    p[IX(i, j - 1)] + p[IX(i, j + 1)]) / 4.0f;
             }
         }
         SetBoundary(DENSITY); // apply boundary conditions to p after each iteration
@@ -235,8 +235,8 @@ void FluidSolver::Project()
     // subtract the pressure gradient from the velocity field
     for (i = 1; i <= N; i++) {
         for (j = 1; j <= N; j++) {
-            u[grid.IX(i, j)] -= 0.5f * (p[grid.IX(i + 1, j)] - p[grid.IX(i - 1, j)]) / h;
-            v[grid.IX(i, j)] -= 0.5f * (p[grid.IX(i, j + 1)] - p[grid.IX(i, j - 1)]) / h;
+            u[IX(i, j)] -= 0.5f * (p[IX(i + 1, j)] - p[IX(i - 1, j)]) / h;
+            v[IX(i, j)] -= 0.5f * (p[IX(i, j + 1)] - p[IX(i, j - 1)]) / h;
         }
     }
 

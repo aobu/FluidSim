@@ -37,13 +37,6 @@ Grid::~Grid()
     std::cout << "Memory deallocated." << std::endl;
 }
 
-// grid coordinates (i, j) to array index
-int Grid::IX(int i, int j) const
-{
-    return i + (N + 2) * j;
-}
-
-#define SWAP(x, y) { float* tmp = x; x = y; y = tmp; }
 
 void Grid::SwapBuffers(FieldType fieldType)
 {

@@ -1,6 +1,9 @@
 #ifndef GRID_H
 #define GRID_H
 
+#define IX(i, j) ((i) + (N + 2) * (j))
+#define SWAP(x, y) { float* tmp = x; x = y; y = tmp; }
+
 class FluidSolver;
 
 // for functions that select fields to operate on
@@ -56,9 +59,6 @@ private:
     // ==================================================
     // FUNCTIONS
     // ==================================================
-
-    // grid coordinates (i, j) to array index
-    int IX(int i, int j) const;
 
     // swap the current and previous buffers for the specified field
     void SwapBuffers(FieldType fieldType);
